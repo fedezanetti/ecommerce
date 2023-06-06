@@ -3,7 +3,9 @@ import { Navbar, Nav } from 'react-bootstrap';
 
 
 
-const NavigationBar = ({ onCategoriaClick, onEstadoClick, onCerrarSesion}) => {
+const NavigationBar = ({ onCategoriaClick, onEstadoClick, onCerrarSesion, usuarioLogueado, onMostrarCarrito}) => {
+
+
 
 const handleCerrarSesion = () => {
   onCerrarSesion();
@@ -18,6 +20,10 @@ const handleCerrarSesion = () => {
     onCategoriaClick(categoria);
  }
 
+ const handleMostrarCarrito = () => {
+  onMostrarCarrito();
+};
+
   return (
     <Navbar bg='light' expand='md'>
       <Navbar.Brand onClick={() => handleCategoriaClick('home')}>Mi Ecommerce</Navbar.Brand>
@@ -29,8 +35,15 @@ const handleCerrarSesion = () => {
           <Nav.Link onClick={() => handleCategoriaClick('categoria 3')}>Categoría 3</Nav.Link>
         </Nav>
         <Nav>
+        {!usuarioLogueado ? (
           <Nav.Link onClick={()=> handleEstadoClick(true, false)}>Iniciar sesión</Nav.Link>
+          ) : null}
+         {usuarioLogueado ? (
+          <>
           <Nav.Link onClick={handleCerrarSesion}>Cerrar sesión</Nav.Link>
+          <Nav.Link onClick={handleMostrarCarrito}>Carrito</Nav.Link>
+          </>
+          ) : null}
         </Nav>
        
       </Navbar.Collapse>
